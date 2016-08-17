@@ -4,7 +4,7 @@ Movie movie;
 
 String roundT = "JUSTGOTOWORK";
 String letter[] = roundT.split("");
-int billCount = 10;
+int billCount = 30;
 PImage bills[] = new PImage[billCount];
 int lim = 12;
 float limX = 300;
@@ -15,6 +15,9 @@ int r = 260;
 PFont akzidenz;
 int indexLetter = 0;
 int scene = 1; 
+float imgX[] = new float[billCount];
+float imgY[] = new float[billCount];
+float imgDist = 0.006;
 
 
 
@@ -44,13 +47,9 @@ void draw() {
    if(scene == 1) {
 
     fill(255, 255, 0, 255);
-    moveAngle += 0.008;
+    moveAngle -= 0.008;
   
     for(int i = 1; i<indexLetter+1; i++) {
-  /*    storePos();
-  
-  
-  */
         initAngle=(PI/6);
         
         if (i <= 6) {
@@ -63,19 +62,30 @@ void draw() {
     }
   }
   if (scene == 2) {
-    createImg();
+    textAlign(CENTER);
+    stroke(3);
+    fill(255,255,0,255);
+    strokeWeight(4);
+    rectMode(CENTER);
+    textSize(16);
+    rect(width/2, height/2, 300, 40);
+    fill(0,255);
+    text("Unleash Offshore €uros", width/2, height/2+5);
+    if(mousePressed) {
+      if(mouseX > width/2 - 150 && mouseX < width/2 + 150 && mouseY > height/2 - 25 && mouseY < height/2 +25) {
+         fill(0,255);
+         //rect(width/2, height/2, 300, 40);
+      
+      }
+    }
+    imgDist += random(0,0.08);
+
+        
   }
   println(frameCount);
 }
 void movieEvent(Movie m) {
   m.read();
-}
-
-void storePos() {
-  for (int i = 0; i<lim; i++) {
-    limX = width/2 +  sin(moveAngle*i) * r * PI/3;
-    limY = height/2 +  cos(moveAngle*i) * r * PI/3;
-  }
 }
 
 void keyPressed() {
@@ -86,15 +96,21 @@ void keyPressed() {
     else {
       indexLetter++;
     }
-    
   } 
   //println(letter[indexLetter], indexLetter, frameCount);
-
 }
+
+
 
 void createImg() {
   for (int i=0; i<billCount; i++) {
     bills[i] = loadImage("euro-note.png");
-    image(bills[i], random(width), random(height));
+    scale(random(0.3,1));
+        
+    for(int a = 0; a<billCount; a++) {
+      imgX[a] = random(1, width);
+      imgY[a] = sin(random(-1,1)*imgDist);
+    }
+    image(bills[i], imgX[i], 0);   
   }
 }
