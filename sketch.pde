@@ -35,13 +35,16 @@ void draw() {
     scene = 2;
   }
   
-  if(scene == 1) {
     image(movie, 0,0);
     if (frameCount % width == 0) {
       background(0);
     }
+
+   
+   if(scene == 1) {
+
     fill(255, 255, 0, 255);
-    moveAngle -= 0.002;
+    moveAngle += 0.008;
   
     for(int i = 1; i<indexLetter+1; i++) {
   /*    storePos();
@@ -49,8 +52,13 @@ void draw() {
   
   */
         initAngle=(PI/6);
-                
-        text(letter[i-1], width/2 + cos(PI+initAngle*i) * r, height/2 + sin(PI+initAngle*i) * r );
+        
+        if (i <= 6) {
+          text(letter[i-1], width/2 + cos(PI+initAngle*i+moveAngle) * r, height/2 + sin(PI+initAngle*i+moveAngle) * r );
+        }
+        else {
+          text(letter[i-1], width/2 + cos(PI+initAngle*i+moveAngle) * r, height/2 + sin(0-PI+initAngle*i+moveAngle) * r );
+        }
         println(letter[i-1], i-1, i);
     }
   }
