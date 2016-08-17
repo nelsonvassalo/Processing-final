@@ -75,6 +75,7 @@ void draw() {
       if(mouseX > width/2 - 150 && mouseX < width/2 + 150 && mouseY > height/2 - 25 && mouseY < height/2 +25) {
          fill(0,255);
          //rect(width/2, height/2, 300, 40);
+        createImg();
       
       }
     }
