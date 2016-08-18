@@ -2,12 +2,11 @@ import processing.video.*;
 
 Movie movie;
 
-String roundT[] = {"JUSTGOTOWORK","NOCASHNOREST", "AUSTERITYFTW"};
+String roundT[] = {"JUSTGOTOWORK","NOCASHNOREST", "IN4AUSTERITY", "HAVEPATIENCE", "OUTOFOURLAND"};
+int wordsTotal = roundT.length;
 int indexText = 0;
 String letter[] = roundT[indexText].split("");
-String caption = "";
-int billCount = 30;
-PImage bills[] = new PImage[billCount];
+String caption = "You wished Europe to ";
 int lim = 12;
 float limX = 300;
 float limY = 300;
@@ -17,10 +16,8 @@ int r = 260;
 PFont akzidenz;
 int indexLetter = 0;
 int scene = 1; 
-float imgX[] = new float[billCount];
-float imgY[] = new float[billCount];
 float imgDist = 0.006;
-int fade = 255;
+int fade, fadeMain = 255;
 
 
 
@@ -38,9 +35,7 @@ void draw() {
   
     textSize(42);
     image(movie, 0,0);
-    if (frameCount % width == 0) {
-      background(0);
-    }
+    
 
     fill(255, 255, 0, 255);
     moveAngle -= 0.008;
@@ -59,16 +54,14 @@ void draw() {
     if (indexLetter <=12) {
         fill(255,255,255,fade);
         textSize(18);
-        text(caption, width/2, height-40);
         fade-=3;
     }
     else {
-      caption = "";
+      caption = "You wish Europe to ";
     }
+    text(caption, width/2, height-40);
 
-  
-  
-  println(frameCount);
+
 }
 void movieEvent(Movie m) {
   m.read();
@@ -83,9 +76,10 @@ void keyPressed() {
       indexLetter++;
     }
   } else {
-    indexLetter = 0;
-    indexText++;
-    caption = "";
+    //indexLetter = 0;
+    //indexText++;
+    //caption = "You wish Europe to ";
+    nextState();
     
   }
   textMode(CENTER);
@@ -99,13 +93,15 @@ void keyPressed() {
   //println(letter[indexLetter], indexLetter, frameCount);
 }
 
-
-
-void createImg() {
-  for (int i=0; i<billCount; i++) {
-    bills[i] = loadImage("euro-note.png");
-    imgX[i] += width/billCount;
-    image(bills[i], imgX[i], imgY[i]);
-
+void nextState() {
+if (fadeMain > 0) {
+  if (indexText < wordsTotal ) {
+     indexText += 1;
+  } else {
+    indexText = 0;
+  }
+  indexLetter = 0;
+  letter = roundT[indexText].split("");
+  caption = "You wished Europe to ";
   }
 }
